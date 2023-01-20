@@ -23,7 +23,7 @@
                     <li class="nav-item">
                         <a href="form2.php" class="nav-link">Corporate Account</a>
                     </li>
-                    <?php if ($_SESSION['email']) {?>
+                    <?php if (isset($_SESSION['email'])) {?>
                     <li class="nav-item mx-4">
                         <button type="button" class="btn btn-lg btn-danger">
                             Logout

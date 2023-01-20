@@ -12,6 +12,7 @@
                 margin:0px;
                 padding: 0px;
                 box-sizing: border-box;
+                font-family:'Times New Roman', Times, serif;
             }
         @media screen and (max-width:900px){
         

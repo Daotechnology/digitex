@@ -1,5 +1,6 @@
 <?php 
 include_once 'conn.php';
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(["statusText"=>"Please use another account or create if haven't one","errorCode"=>500]);

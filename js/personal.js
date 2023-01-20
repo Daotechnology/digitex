@@ -43,11 +43,10 @@ forms.addEventListener("submit", async(e)=>{
         acc_type:accountType
     }
 
-    console.log(data)
 
     const response = await axios.post('backend/personal_details.php', data);
     if (response) {
-        console.log(response);
+        alert(response.data.statusText);
     }
 })
 

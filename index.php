@@ -8,7 +8,7 @@
     <!-- navbar -->
     <?php include_once('template/nav.php'); ?>
 
-    <?php if ($_SESSION['email']){?>
+    <?php if (isset($_SESSION['email'])){?>
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6">
@@ -32,9 +32,27 @@
         <?php  
         include 'backend/conn.php';
         $email = $_SESSION['email'];
-        $query_user = $conn->query(" SELECT * FROM personal_details where email = '$email' ")->fetch_array();
-        foreach($query_user as $rows =>$v) {
-            $meta[$rows] = $v;
+        $query_user = $conn->query("SELECT * FROM personal_details where email = '$email' ");
+        if (mysqli_num_rows($query_user) < 1) {
+            $column_name = $conn->query("SHOW COLUMNS FROM personal_details");
+            $numColumns = mysqli_num_rows($column_name);
+            $x = 0;
+            while ($x < $numColumns)
+            {
+                $colname = $column_name->fetch_array();
+                $col[$colname[0]] = $x;
+                $x++;
+            }
+            // print_r($col);
+            foreach($col as $rows =>$v) {
+                $meta[$rows] = "";
+            }
+        } else {
+            $arr = $query_user->fetch_array();
+            foreach($arr as $rows =>$v) {
+
+                $meta[$rows] = $v;
+            }
         }
         ?>
         <div class="row">
@@ -71,7 +89,7 @@
                 <div class = "d-flex justify-content-between">
                     <span>Account Category:</span>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="Individual account" id="acc_category">
+                      <input class="form-check-input" type="checkbox" value="Individual account" id="acc_category" checked>
                       <label class="form-check-label" for="flexCheckDefault"> Individual account</label>
                       
                     </div>
@@ -90,7 +108,7 @@
                 <div style = "display:flex;justify-content: space-between;">
                     <span>Account type:</span>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="Current" id="acc_type">
+                      <input class="form-check-input" type="checkbox" value="Current" id="acc_type" checked>
                       <label class="form-check-label" for="flexCheckDefault"> Current</label>
                       
                     </div>
@@ -178,7 +196,7 @@
             <div class = "mt-2">
                 <button type="button" class="btn btn-danger mt-2">Dual Citizenship</button>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="dual" value="yes">
+                    <input class="form-check-input" type="checkbox" id="dual" value="yes" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                 </div>
 
@@ -353,6 +371,32 @@
       </div>
 
       <!-- details of next of kin -->
+      <?php  
+        $email = $_SESSION['email'];
+        $query_user = $conn->query("SELECT * FROM nextofkin where email = '$email' ");
+        if (mysqli_num_rows($query_user) < 1) {
+            $column_name = $conn->query("SHOW COLUMNS FROM nextofkin");
+            $numColumns = mysqli_num_rows($column_name);
+            $x = 0;
+            while ($x < $numColumns)
+            {
+                $colname = $column_name->fetch_array();
+                $col[$colname[0]] = $x;
+                $x++;
+            }
+            // print_r($col);
+            foreach($col as $rows =>$v) {
+                $meta[$rows] = "";
+            }
+        } else {
+            $arr = $query_user->fetch_array();
+            foreach($arr as $rows =>$v) {
+
+                $meta[$rows] = $v;
+            }
+        }
+        ?>
+
       <div class="row mt-3">
         <div class="personal_details bg-danger text-white fw-bold h5 h-100">
             DETAILS OF NEXT OF KIN
@@ -362,13 +406,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Surname </label>
-                        <input type="text" class="form-control" name = "surname" id="exampleInputEmail1"  placeholder="Enter Surname">
+                        <input type="text" class="form-control" value ="<?=  $meta['surname']; ?>" name = "surname" id="exampleInputEmail1"  placeholder="Enter Surname">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">FirstName</label>
-                        <input type="text" class="form-control" name = "firstname" id="exampleInputEmail1"  placeholder="Enter Firstname">
+                        <input type="text" class="form-control" value ="<?=  $meta['firstname']; ?>" name = "firstname" id="exampleInputEmail1"  placeholder="Enter Firstname">
                     </div>
                 </div>
             </div>
@@ -376,13 +420,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Othername</label>
-                        <input type="text" class="form-control" name = "othername" id="exampleInputEmail1"  placeholder="Enter Othername">
+                        <input type="text" value ="<?=  $meta['othername']; ?>" class="form-control" name = "othername" id="exampleInputEmail1"  placeholder="Enter Othername">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Date of Birth</label>
-                        <input type="text" class="form-control" name = "dob" id="exampleInputEmail1"  placeholder="09/09/1968">
+                        <input type="text" class="form-control" value ="<?=  $meta['dob']; ?>"name = "dob" id="exampleInputEmail1"  placeholder="09/09/1968">
                     </div>
                 </div>
             </div>
@@ -390,13 +434,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Gender</label>
-                        <input type="text" class="form-control" name = "gender" id="exampleInputEmail1"  placeholder="Female">
+                        <input type="text" value ="<?=  $meta['gender']; ?>" class="form-control" name = "gender" id="exampleInputEmail1"  placeholder="Female">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Mobile Number</label>
-                        <input type="text" class="form-control" name = "mobile_number" id="exampleInputEmail1"  placeholder="09069394998">
+                        <input type="text" class="form-control" value ="<?=  $meta['mobile_number']; ?>" name = "mobile_number" id="exampleInputEmail1"  placeholder="09069394998">
                     </div>
                 </div>
             </div>
@@ -405,13 +449,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Street Name</label>
-                        <input type="text" class="form-control" name = "street_name" id="exampleInputEmail1"  placeholder="Enter Title">
+                        <input type="text" class="form-control" value ="<?= $meta['street_name']; ?>" name = "street_name" id="exampleInputEmail1"  placeholder="Enter Title">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nearest Bus top</label>
-                        <input type="text" class="form-control" name = "bus_stop" id="exampleInputEmail1"  placeholder="Enter Surname">
+                        <input type="text" class="form-control" value ="<?= $meta['bus_stop']; ?>" name = "bus_stop" id="exampleInputEmail1"  placeholder="Enter Surname">
                     </div>
                 </div>
             </div>
@@ -485,18 +529,43 @@
         <div class="e-address h5 bg-danger text-white">
             Employer's/Employment Address (Even if self Employed)
         </div>
-        <form>
+        <?php  
+        $email = $_SESSION['email'];
+        $query_user = $conn->query("SELECT * FROM employment_address where email = '$email' ");
+        if (mysqli_num_rows($query_user) < 1) {
+            $column_name = $conn->query("SHOW COLUMNS FROM employment_address");
+            $numColumns = mysqli_num_rows($column_name);
+            $x = 0;
+            while ($x < $numColumns)
+            {
+                $colname = $column_name->fetch_array();
+                $col[$colname[0]] = $x;
+                $x++;
+            }
+            // print_r($col);
+            foreach($col as $rows =>$v) {
+                $meta[$rows] = "";
+            }
+        } else {
+            $arr = $query_user->fetch_array();
+            foreach($arr as $rows =>$v) {
+
+                $meta[$rows] = $v;
+            }
+        }
+        ?>
+        <form id ="employee_address">
             <div class="row mt-2">
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Street Number</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter Street Number">
+                        <input type="text" name = "street_number" value = "<?= $meta['street_number']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Enter Street Number">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Street Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter Street Name">
+                        <input type="text" name = "street_name" value = "<?= $meta['street_name']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Enter Street Name">
                     </div>
                 </div>
             </div>
@@ -504,13 +573,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">City/Town</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter City/Town">
+                        <input type="text" name = "city" value = "<?= $meta['city']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Enter City/Town">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nearest Bus Stop/Landmark</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="09/09/1968">
+                        <input type="text" name = "bus_stop" value = "<?= $meta['bus_stop']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="09/09/1968">
                     </div>
                 </div>
             </div>
@@ -518,13 +587,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">LGA Area</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Ilesha East">
+                        <input type="text" name = "lga_area" value = "<?= $meta['lga_area']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Ilesha East">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">State</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Osun State">
+                        <input type="text" name = "state" class="form-control" value = "<?= $meta['state']; ?>" id="exampleInputEmail1"  placeholder="Osun State">
                     </div>
                 </div>
             </div>
@@ -533,7 +602,7 @@
                 <div class="col-sm-12 col md-12 col-lg-12">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nature of Business/Occupation</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter Surname">
+                        <input type="text" name = "nature_of_business" value = "<?= $meta['nature_of_business']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Enter Surname">
                     </div>
                 </div>
             </div>
@@ -541,17 +610,17 @@
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Office Phone Number</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter Title">
+                        <input type="text" name = "phone_number" value = "<?= $meta['phone_number']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Enter Title">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Fax Number</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter Surname">
+                        <input type="text" name = "fax_number" class="form-control" value = "<?= $meta['fax_number']; ?>" id="exampleInputEmail1"  placeholder="Enter Surname">
                     </div>
                 </div>
             </div>
-
+            <button class = "btn btn-danger btn-md mt-2 float-end" type="submit"> Submit </button>
         </form>
       </div>
 
@@ -863,6 +932,9 @@
     <script src="js/contact.js"></script>
     <script src="js/employment.js"></script>
     <script src="js/nextofkin.js"></script>
+    <script src="js/employee_address.js"></script>
+
+
 
     <script>
         const form = document.querySelector("#login");

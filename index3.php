@@ -1,59 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content='maximum-scale=1.0, initial-scale=1.0, width=device-width' name='viewport'>
-    <title>KYC</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<style>
-    *{
-        margin:0px;
-        padding:0px;
-        box-sizing: border-box;
-        font-family:'Courier New', Courier, monospace;
-    }
-    @media screen and (max-width:900px){
-      .logo {
-          width:100%;
-      }
-  }
-</style>
-</head>
+<?php include 'template/head.php'; ?>
+
 <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-md navbar-light d-flex flex-row justify-content-between">
-        <div class="container-xxl">
-            <a href="#intro" class="navbar-brand">
-                <span class="fw-bold text-secondary imaged">
-                    <img src="./reheboth.png" class = "logo img-responsive" alt="">
-                </span>
-            </a>
+    <?php include 'template/nav.php'; ?>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
-                aria-controls="#main-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- navbar links -->
-            <div class="collapse navbar-collapse justify-content-around align-center" id="main-nav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="index.html" class="nav-link">Form1</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="form2.html" class="nav-link">Form2</a>
-                    </li>
-
-                    <li class="nav-item ms-2 d-none d-md-inline">
-                        <a href="#pricing" class="btn btn-secondary">Contact Us</a>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-    </nav>
+    <?php if(isset($_SESSION['email'])) {?>
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6">
@@ -107,6 +60,7 @@
             </div>
           
         </div>
+        
         <div class="row mt-2">
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                 <div class="form-group">
@@ -273,6 +227,10 @@
 
         </div>
     </div>
+
+    <?php } else {
+        header('Location:index.php');
+    } ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous">

@@ -127,10 +127,36 @@
             }
         }
     ?>
+    <?php  
+        $email = $_SESSION['email'];
+        $query_user = $conn->query("SELECT * FROM kyc where email = '$email' ");
+        if (mysqli_num_rows($query_user) < 1) {
+            $column_name = $conn->query("SHOW COLUMNS FROM kyc");
+            $numColumns = mysqli_num_rows($column_name);
+            $x = 0;
+            while ($x < $numColumns)
+            {
+                $colname = $column_name->fetch_array();
+                $col[$colname[0]] = $x;
+                $x++;
+            }
+            // print_r($col);
+            foreach($col as $rows =>$v) {
+                $kyc[$rows] = "";
+            }
+        } else {
+            $arr = $query_user->fetch_array();
+            foreach($arr as $rows =>$v) {
+
+                $kyc[$rows] = $v;
+            }
+        }
+        ?>
+    <form id="kyc">
             <div class="col-sm-12 col-md-12 col-lg-12 mt-4">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Customer Name:</label>
-                    <input type="text" class="form-control" value = "<?= $meta['surname']." ". $meta['firstname']." ".$meta['othername'] ;?>" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" value = "<?= $meta['surname']." ". $meta['firstname']." ".$meta['othername'] ;?>" id="exampleInputEmail1" >
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Email Address</label>
@@ -141,13 +167,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Account Type</label>
-                        <input type="text" class="form-control" value = "<?= $meta['acc_type']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Title">
+                        <input type="text" class="form-control" value = "<?= $meta['acc_type']; ?>" id="exampleInputEmail1"  placeholder="Enter Title">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Telephone Number</label>
-                        <input type="text" class="form-control" value ="<?= $contact['phone_number1']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Surname">
+                        <input type="text" class="form-control" value ="<?= $contact['phone_number1']; ?>" id="exampleInputEmail1"  placeholder="Enter Surname">
                     </div>
                 </div>
             </div>
@@ -155,13 +181,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Gender </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value ="<?= $kyc['gender']; ?>" name = "gender" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Marital Status </label>
-                        <input type="text" class="form-control" value = "<?= $meta['marital_status']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value = "<?= $meta['marital_status']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -169,13 +195,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Date of Birth</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value ="<?= $kyc['dob']; ?>" name = "dob" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Maiden Name </label>
-                        <input type="text" class="form-control" value = "<?= $meta['maidenName']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value = "<?= $meta['maidenName']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -183,13 +209,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nationality </label>
-                        <input type="text" class="form-control" value = "<?= $meta['nationality']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $meta['nationality']; ?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> State of Origin </label>
-                        <input type="text" class="form-control" value = "<?= $meta['origin']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value = "<?= $meta['origin']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -197,27 +223,28 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">LGA </label>
-                        <input type="text" class="form-control" value = "<?= $contact['lg_area']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $contact['lg_area']; ?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Home Town </label>
-                        <input type="text" class="form-control" value = "<?= $contact['home_town']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value = "<?= $contact['home_town']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
+
             <div class="row mt-2">
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Place of birth </label>
-                        <input type="text" class="form-control" value = "<?= $meta['pob']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $meta['pob']; ?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Mother Maiden Name </label>
-                        <input type="text" class="form-control"  value = "<?= $meta['maidenName']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control"  value = "<?= $meta['maidenName']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -225,13 +252,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Address </label>
-                        <input type="text" class="form-control" value = "<?= $contact['house_number']." ".$contact['street_name']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $contact['house_number']." ".$contact['street_name']; ?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Religion </label>
-                        <input type="text" class="form-control" value = "<?= $contact['religion']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value = "<?= $contact['religion']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -240,13 +267,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nearest Bus Stop </label>
-                        <input type="text" class="form-control" value = "<?= $contact['bus_stop']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $contact['bus_stop']; ?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> BVN </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" name="bvn" value ="<?= $kyc['bvn']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -255,13 +282,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Occupation/Profession </label>
-                        <input type="text" class="form-control" value = "<?= $employment['nature_of_business']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $employment['nature_of_business']; ?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Employers Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value ="<?= $kyc['employers_name']; ?>" name = "employers_name" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -270,13 +297,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Address(Office) </label>
-                        <input type="text" class="form-control" value = "<?= $employment['street_name']." ".$employmment['bus_stop']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $employment['street_name']." ".$employment['bus_stop']; ?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Customer Nickname </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value ="<?= $kyc['customer_nickname']; ?>" name = "customer_nickname" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -286,13 +313,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Next of Kin </label>
-                        <input type="text" class="form-control" value = "<?= $nextofkin['surname']." ".$nextofkin['firstname']." ". $nextofkin['othername'];?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $nextofkin['surname']." ".$nextofkin['firstname']." ". $nextofkin['othername'];?>" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Relationship </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value ="<?= $kyc['relationship']; ?>" name ="relationship" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -302,13 +329,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Address(Office) </label>
-                        <input type="text" class="form-control" value = "<?= $nextofkin['street_name']." ".$nextofkin['bus_stop'];?>"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $nextofkin['street_name']." ".$nextofkin['bus_stop'];?>"  id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Customer Nickname(Alias) </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value ="<?= $kyc['customer_nickname']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -318,13 +345,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> ID TYPE </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value ="<?= $kyc['id_type']; ?>" name = "id_type" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> ID No </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" name = "id_no" value ="<?= $kyc['id_no']; ?>" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -334,13 +361,13 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> ID issued Date </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value ="<?= $kyc['id_issue_date']; ?>" name = "id_issue_date" id="exampleInputEmail1"  placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Expiry Date </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Married">
+                        <input type="text" class="form-control" value ="<?= $kyc['expiry_date']; ?>" name = "expiry_date" id="exampleInputEmail1"  placeholder="Married">
                     </div>
                 </div>
             </div>
@@ -348,20 +375,21 @@
                 <div class="col-sm-12 col md-12 col-lg-12 mb-3">
                     <div class="form-group mb-2">
                         <label for="exampleInputEmail1"> Expected Annual Income(corporate account) </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="#1,000,000.00">
+                        <input type="text" class="form-control" value ="<?= $kyc['expected_income']; ?>" name = "expected_income" id="exampleInputEmail1"  placeholder="#1,000,000.00">
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputEmail1"> Others(Specify)</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="#1,000,000.00">
+                        <input type="text" class="form-control" value ="<?= $kyc['other_income']; ?>" name = "other_income" id="exampleInputEmail1"  placeholder="#1,000,000.00">
                         <div id="emailHelp" class="form-text">Other sources of income apart from occupation: Investment( ) Dividends( ) Others( ) </div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="exampleInputEmail1"> Who introduced you to the bank? </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+                        <input type="text" class="form-control" value ="<?= $kyc['refferral']; ?>" name = "refferral" id="exampleInputEmail1"  placeholder="">
                     </div>
                 </div>
             </div>
-
+            <button class = "btn btn-danger btn-md mt-2 float-end" type="submit"> Submit </button>
+    </form>
             <div class="row mt-2">
                 <!--  -->
                 <div class="col-sm-12 col md-12 col-lg-12 mb-3">
@@ -427,8 +455,9 @@
         </div>
     </div>
     <?php } ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="js/kyc.js"></script>
 </body>
 
 </html>

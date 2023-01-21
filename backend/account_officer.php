@@ -22,7 +22,7 @@ if ($_SESSION['email']) {
     $landmark = $data['landmark'];
     $address_confirmed = $data['address_confirmed'];
     $visited_date = $data['visited_date'];
-    $sms = $data['sms'];
+    $sms = $data['sms'] ;
     $atm = $data['atm'];
     $mobile_banking = $data['mobile_banking'];
     $internet_banking= $data['internet_banking'];

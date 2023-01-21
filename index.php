@@ -9,6 +9,17 @@
     <?php include_once('template/nav.php'); ?>
 
     <?php if (isset($_SESSION['email'])){?>
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <img src="..." class="rounded me-2" alt="...">
+    <strong class="me-auto">Bootstrap</strong>
+    <small>11 mins ago</small>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body">
+    Hello, world! This is a toast message.
+  </div>
+</div>
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6">
@@ -901,31 +912,35 @@
     <?php } ?>
     <!-- REGISTER  -->
 
-    <!-- Modal -->
+    <!--Register Modal -->
     <div class="modal fade ls" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-body">
                 <button type="button" class="btn-close" style="background-color:white" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="myform">
-                    <h1 class="text-center">Login Form</h1>
-                    <form id = "login">
+                    <h1 class="text-center">Register Form</h1>
+                    <form id = "register">
+
                         <div class="mb-3 mt-4">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
                             <input type="email" class="form-control" name="email" id="exampleInputEmail1" >
                         </div>
+
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" id="exampleInputPassword1">
                         </div>
-                        <button type="submit"  class="btn btn-danger mt-3 mb-3 "  data-bs-dismiss="modal" >Login</button>
-                        <p>Not a member?<a href="#" id = "md1" class="btn btn-sm btn-danger rounded mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal1" > Register</a></p>
+
+                        <button type="submit"  class="btn btn-danger mt-3 mb-3 "  data-bs-dismiss="modal" >Register</button>
+                        <p>Already a member?<a href="#" id = "md1" class="btn btn-sm btn-danger rounded mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal1" > Login </a></p>
                     </form>
                 </div>
                 </div>
             </div>
             </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="js/personal.js"></script>
@@ -937,7 +952,7 @@
 
 
     <script>
-        const form = document.querySelector("#login");
+        const form = document.querySelector("#register");
         form.addEventListener("submit",async(e)=>{
             e.preventDefault();
             const email = form.email.value
@@ -950,7 +965,7 @@
             const response = await axios.post('backend/login.php',data);
            
             if (response.data) {
-                alert(response.data.statusText);
+                location.href = 'index.php';
             }
         })
         
@@ -960,20 +975,20 @@
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-body">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="myform">
-                    <h1 class="text-center">Register</h1>
-                    <form>
+                    <h1 class="text-center">Login Form</h1>
+                    <form id = "login">
                         <div class="mb-3 mt-4">
                             <label for="exampleInputEmail1" class="form-label"> Email address </label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" >
+                            <input type="email" name = "email" class="form-control" id="exampleInputEmail1" >
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label"> Password </label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <input type="password" name = "password" class="form-control" id="exampleInputPassword1">
                         </div>
-                        <button type="submit"  class="btn btn-danger mt-3 mb-3"> Register </button>
-                        <p>Not a member?<a href="#" id ="md2" class="btn btn-sm btn-danger rounded mx-3" data-bs-dismiss="modal"> Login </a></p>
+                        <button type="submit"  class="btn btn-danger mt-3 mb-3"> Login </button>
+                        <p>Not a member?<a href="#" id ="md2" class="btn btn-sm btn-danger rounded mx-3" data-bs-dismiss="modal"> Register </a></p>
                     </form>
                 </div>
                 </div>
@@ -981,6 +996,25 @@
             </div>
     </div>
     
+    <script>
+        const login = document.querySelector("#login");
+        login.addEventListener("submit",async(e)=>{
+            e.preventDefault();
+            const email = login.email.value
+            const password = login.password.value;
+
+            const data = {
+                "email":email,
+                "password":password
+            }
+            const response = await axios.post('backend/register.php',data);
+            if (response.data.status) {
+                location.href = 'index.php';
+            } else if(response.data.errorCode) {
+                alert(response.data.statusText);
+            }
+        })
+    </script>
     <script>
         // const toastTrigger = document.getElementById('liveToastBtn')
         // const toastLiveExample = document.getElementById('liveToast')

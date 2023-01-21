@@ -14,35 +14,63 @@
                     <img src="reheboth.png" class = "logo img-responsive" alt="">
                 </div> -->
             </div>
+            
+    <?php  
+        include 'backend/conn.php';
+        $email = $_SESSION['email'];
+
+        $query_user = $conn->query("SELECT * FROM account_officer where email = '$email' ");
+        if (mysqli_num_rows($query_user) < 1) {
+            $column_name = $conn->query("SHOW COLUMNS FROM account_officer");
+            $numColumns = mysqli_num_rows($column_name);
+            $x = 0;
+            while ($x < $numColumns)
+            {
+                $colname = $column_name->fetch_array();
+                $col[$colname[0]] = $x;
+                $x++;
+            }
+            // print_r($col);
+            foreach($col as $rows =>$v) {
+                $meta[$rows] = "";
+            }
+        } else {
+            $arr = $query_user->fetch_array();
+            foreach($arr as $rows =>$v) {
+
+                $meta[$rows] = $v;
+            }
+        }
+    ?>
     <form id = "account_officer">
            <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Account Name:</label>
-                  <input type="text" name = "account_name" class="form-control" id="exampleInputEmail1" >
+                  <input type="text" name = "account_name" value = "<?= $meta['account_name']; ?>" class="form-control" id="exampleInputEmail1" >
                 </div>
            </div>
            <div class="row mt-2">
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Account Number</label>
-                    <input type="text" name = "account_number" class="form-control" id="exampleInputEmail1"  placeholder="Enter Title">
+                    <input type="text" name = "account_number" value = "<?= $meta['account_number']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Enter Title">
                 </div>
             </div>
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Account Type</label>
-                    <input type="text" name = "account_type" class="form-control" id="exampleInputEmail1"  placeholder="Enter Surname">
+                    <input type="text" name = "account_type" value = "<?= $meta['account_type']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Enter Surname">
                 </div>
             </div>
         </div>
         <div class="row mt-2">
-            <p>I <input  name = "officer_name" type ="text" placeholder ="Olajide Oladapo Ayomide"/> visited the above named customer’s address and below are my findings:</p>
+            <p>I <input  name = "officer_name" type ="text" value = "<?= $meta['officer_name']; ?>" placeholder ="Olajide Oladapo Ayomide"/> visited the above named customer’s address and below are my findings:</p>
         </div>
         <div class="row mt-2">
             <div class="col-sm-12 col md-12 col-lg-12 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Address Visited</label>
-                    <input type="text" name="address_visited" class="form-control" id="exampleInputEmail1"  placeholder="Ikuomola street obianor">
+                    <input type="text" name="address_visited" value = "<?= $meta['address_visited']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Ikuomola street obianor">
                 </div>
             </div>
            
@@ -51,7 +79,7 @@
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Description of the building including type, colour of the house and the gate</label>
-                    <input type="text" name = "building_description" class="form-control" id="exampleInputEmail1"  placeholder=".......">
+                    <input type="text" value = "<?= $meta['building_description']; ?>" name = "building_description" class="form-control" id="exampleInputEmail1"  placeholder=".......">
                 </div>
             </div>
           
@@ -61,13 +89,13 @@
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Closest Bus Stop</label>
-                    <input type="text" name = "bus_stop" class="form-control" id="exampleInputEmail1"  placeholder="Male">
+                    <input type="text" name = "bus_stop" value = "<?= $meta['bus_stop']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Male">
                 </div>
             </div>
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1"> Major LandMark </label>
-                    <input type="text" name = "landmark" class="form-control" id="exampleInputEmail1"  placeholder="Married">
+                    <input type="text" name = "landmark"  value = "<?= $meta['landmark']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Married">
                 </div>
             </div>
         </div>
@@ -75,7 +103,7 @@
             <div class="col-sm-12 col md-12 col-lg-12 mb-3">
                 <label for="">Address confirmed okay</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="address_confirmed" value="Yes">
+                    <input class="form-check-input" type="checkbox" id="address_confirmed" value="Yes" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -91,7 +119,7 @@
             <div class="col-sm-12 col md-12 col-lg-12 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Date of visit </label>
-                    <input type="text" name = "visited_date" class="form-control" id="exampleInputEmail1"  placeholder="09/09/1994">
+                    <input type="text" value = "<?= $meta['visited_date']; ?>" name = "visited_date" class="form-control" id="exampleInputEmail1"  placeholder="09/09/1994">
                 </div>
             </div>
         </div>
@@ -100,7 +128,7 @@
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Account Officers Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Male">
+                    <input type="text" value = "<?= $meta['officer_name']; ?>" class="form-control" id="exampleInputEmail1"  placeholder="Male">
                 </div>
             </div>
             <div class="col-sm-12 col md-6 col-lg-6 mb-3">
@@ -138,7 +166,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="sms" value="Yes">
+                    <input class="form-check-input" type="checkbox" id="sms" value="Yes" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -155,7 +183,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="atm" value="Yes">
+                    <input class="form-check-input" type="checkbox" id="atm" value="Yes" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -173,7 +201,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="mobile_banking" value="Yes">
+                    <input class="form-check-input" type="checkbox" id="mobile_banking" value="Yes" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -191,7 +219,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="internet_banking" value="Yes">
+                    <input class="form-check-input" type="checkbox" id="internet_banking" value="Yes" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -205,7 +233,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <button type = "button" class = "btn btn-danger mt-4">Upload Signature </h3>
+                <!-- <button type = "button" class = "btn btn-danger mt-4">Upload Signature </h3> -->
                 <button class = "btn btn-danger btn-md mt-4 float-end mb-4" type="submit"> Submit </button>
 
             </div>

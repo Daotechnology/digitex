@@ -46,6 +46,11 @@ forms.addEventListener("submit", async(e)=>{
 
     const response = await axios.post('backend/personal_details.php', data);
     if (response) {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toadd . astEl);
+        })
+
         alert(response.data.statusText);
     }
 })

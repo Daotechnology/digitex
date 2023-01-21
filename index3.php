@@ -75,11 +75,11 @@
             <div class="col-sm-12 col md-12 col-lg-12 mb-3">
                 <label for="">Address confirmed okay</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="address_confirmed" value="option1">
+                    <input class="form-check-input" type="checkbox" id="address_confirmed" value="Yes">
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="address_confirmed" value="option2">
+                    <input class="form-check-input" type="checkbox" id="address_confirmed" value="No">
                     <label class="form-check-label" for="inlineCheckbox2">No</label>
                   </div>
             </div>
@@ -138,11 +138,11 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="sms" value="option1">
+                    <input class="form-check-input" type="checkbox" id="sms" value="Yes">
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="sms" value="option2">
+                    <input class="form-check-input" type="checkbox" id="sms" value="No">
                     <label class="form-check-label" for="inlineCheckbox2">No</label>
                   </div>
                  
@@ -155,11 +155,11 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="atm" value="option1">
+                    <input class="form-check-input" type="checkbox" id="atm" value="Yes">
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="atm" value="option2">
+                    <input class="form-check-input" type="checkbox" id="atm" value="No">
                     <label class="form-check-label" for="inlineCheckbox2">No</label>
                   </div>
                  
@@ -173,11 +173,11 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="mobile_banking" value="option1">
+                    <input class="form-check-input" type="checkbox" id="mobile_banking" value="Yes">
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="mobile_banking" value="option2">
+                    <input class="form-check-input" type="checkbox" id="mobile_banking" value="No">
                     <label class="form-check-label" for="inlineCheckbox2">No</label>
                   </div>
                  
@@ -191,11 +191,11 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="internet_banking" value="option1">
+                    <input class="form-check-input" type="checkbox" id="internet_banking" value="Yes">
                     <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="internet_banking" value="option2">
+                    <input class="form-check-input" type="checkbox" id="internet_banking" value="No">
                     <label class="form-check-label" for="inlineCheckbox2">No</label>
                   </div>
                  

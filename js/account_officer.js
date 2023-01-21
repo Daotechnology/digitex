@@ -50,6 +50,8 @@ form.addEventListener("submit", async(e)=>{
         internet_banking:internet
     }
 
+    console.log(data);
+
     const response = await axios.post('backend/account_officer.php', data);
     console.log(response);
     if (response) {

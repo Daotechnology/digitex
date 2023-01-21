@@ -78,10 +78,9 @@
 
 <?php  
         $email = $_SESSION['email'];
-
-        $query_user = $conn->query("SELECT * FROM contact_details where email = '$email' ");
+        $query_user = $conn->query("SELECT * FROM nextofkin where email = '$email' ");
         if (mysqli_num_rows($query_user) < 1) {
-            $column_name = $conn->query("SHOW COLUMNS FROM contact_details");
+            $column_name = $conn->query("SHOW COLUMNS FROM nextofkin");
             $numColumns = mysqli_num_rows($column_name);
             $x = 0;
             while ($x < $numColumns)
@@ -92,13 +91,39 @@
             }
             // print_r($col);
             foreach($col as $rows =>$v) {
-                $contact[$rows] = "";
+                $nextofkin[$rows] = "";
             }
         } else {
             $arr = $query_user->fetch_array();
             foreach($arr as $rows =>$v) {
 
-                $contact[$rows] = $v;
+                $nextofkin[$rows] = $v;
+            }
+        }
+    ?>
+
+<?php  
+        $email = $_SESSION['email'];
+        $query_user = $conn->query("SELECT * FROM employment_address where email = '$email' ");
+        if (mysqli_num_rows($query_user) < 1) {
+            $column_name = $conn->query("SHOW COLUMNS FROM employment_address");
+            $numColumns = mysqli_num_rows($column_name);
+            $x = 0;
+            while ($x < $numColumns)
+            {
+                $colname = $column_name->fetch_array();
+                $col[$colname[0]] = $x;
+                $x++;
+            }
+            // print_r($col);
+            foreach($col as $rows =>$v) {
+                $employment[$rows] = "";
+            }
+        } else {
+            $arr = $query_user->fetch_array();
+            foreach($arr as $rows =>$v) {
+
+                $employment[$rows] = $v;
             }
         }
     ?>
@@ -230,7 +255,7 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Occupation/Profession </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $employment['nature_of_business']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
@@ -245,7 +270,7 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Address(Office) </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $employment['street_name']." ".$employmment['bus_stop']; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
@@ -261,7 +286,7 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Next of Kin </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $nextofkin['surname']." ".$nextofkin['firstname']." ". $nextofkin['othername'];?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
@@ -277,7 +302,7 @@
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> Address(Office) </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
+                        <input type="text" class="form-control" value = "<?= $nextofkin['street_name']." ".$nextofkin['bus_stop'];?>"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Male">
                     </div>
                 </div>
                 <div class="col-sm-12 col md-6 col-lg-6 mb-3">

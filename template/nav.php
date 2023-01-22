@@ -25,7 +25,7 @@
                     </li>
                     <?php if (isset($_SESSION['email'])) {?>
                     <li class="nav-item mx-4">
-                        <button type="button" class="btn btn-lg btn-danger">
+                        <button type="button" id = "logout" class="btn btn-lg btn-danger">
                             Logout
                           </button>
                     </li>
@@ -39,3 +39,5 @@
 
         </div>
     </nav>
+
+    

@@ -7,6 +7,13 @@
     <?php include 'template/nav.php'; ?>
 
     <?php if(isset($_SESSION['email'])) {?>
+       <!-- Toast Start -->
+       <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <!--  -->
+            </div>
+        </div>
+        <!-- Toast --> 
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6">
@@ -258,14 +265,18 @@
         </div>
     </div>
 
-    <?php } else {
-        header('Location:index.php');
-    } ?>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="js/account_officer.js"></script>
+
+    <?php } else {
+        header('Location:index.php');
+    } ?>
+   
+
     </body>
 
     <footer>
-
+<?php include 'template/footer.php'; ?>
     </footer>

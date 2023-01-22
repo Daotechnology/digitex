@@ -45,7 +45,7 @@ if ($_SESSION['email']) {
     $insert_detail = "INSERT INTO account_officer(`account_name`, `account_number`, `account_type`, `officer_name`, `address_visited`, `building_description`, `bus_stop`, `landmark`, `address_confirmed`, `visited_date`, `email`, `sms`, `atm`, `mobile_banking`, `internet_banking`) VALUES ('$account_name','$account_number','$account_type','$officer_name','$address_visited','$building_description','$bus_stop','$landmark','$address_confirmed','$visited_date','$email','$sms','$atm','$mobile_banking','$internet_banking')";
     $insert_account_officer = $conn->query($insert_detail);
     if ($insert_account_officer) {
-        echo json_encode(['status'=>200,'statusText'=>"Personal Details Updated Successfully"]);
+        echo json_encode(['status'=>200,'statusText'=>"Officer Details Updated Successfully"]);
     } else {
         echo json_encode(['errorCode'=>500,'statusText'=>"Not Successful"]);
     }

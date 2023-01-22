@@ -15,9 +15,35 @@ kin.addEventListener("submit", async(e)=>{
     }
     console.log(data)
     const response = await axios.post('backend/nextofkin.php', data);
-    if (response) {
-        alert(response.data.statusText);
+    const toast = new bootstrap.Toast(toastLiveExample); 
+    if (response.data.status) {
+        toastLiveExample.innerHTML = `
+            <div class="toast-header">
+                <img src="reheboth.png" style = "height:10px" class="rounded me-2" alt="...">
+                <strong class="me-auto text-success">Success Message</strong>
+                <small>1 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-center fw-bold">
+                ${response.data.statusText}
+            </div>
+        `
+        toast.show();
+    } else if(response.data.errorCode) {
+        toastLiveExample.innerHTML = `
+            <div class="toast-header">
+                <img src="reheboth.png" style = "height:10px" class="rounded me-2" alt="...">
+                <strong class="me-auto text-danger">Error!!!</strong>
+                <small>1 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-center fw-bold">
+                ${response.data.statusText}
+            </div>
+        `
+        toast.show();
     }
+    
 })
 
 

@@ -29,7 +29,7 @@ if ($_SESSION['email']) {
         $update = "UPDATE nextofkin SET surname ='$surname',`firstname`='$firstname',`othername`='$othername',`dob`='$dob',`gender`='$gender',`mobile_number`='$mobile_number',`street_name`='$street_name',`bus_stop`='$bus_stop' WHERE email = '$email'";
         $update_personal_details = $conn->query($update);
         if ($update_personal_details) {
-            echo json_encode(['status'=>200,'statusText'=>"Personal Details Updated Successfully"]);
+            echo json_encode(['status'=>200,'statusText'=>"Next Of Kin Updated Successfully"]);
         } else {
             echo json_encode(['errorCode'=>500,'statusText'=>"Not Successful"]);
         }

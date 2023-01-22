@@ -3,6 +3,7 @@ const branch = document.getElementById("branch");
 const dual = document.querySelectorAll("#dual");
 const acc_category = document.querySelectorAll("#acc_category");
 const acc_type = document.querySelectorAll("#acc_type");
+const toastLiveExample = document.getElementById('liveToast')
 
 let dualValue, category, accountType;
 
@@ -45,13 +46,33 @@ forms.addEventListener("submit", async(e)=>{
 
 
     const response = await axios.post('backend/personal_details.php', data);
-    if (response) {
-        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-        var toastList = toastElList.map(function (toastEl) {
-        return new bootstrap.Toast(toadd . astEl);
-        })
-
-        alert(response.data.statusText);
+    const toast = new bootstrap.Toast(toastLiveExample); 
+    if (response.data.status) {
+        toastLiveExample.innerHTML = `
+            <div class="toast-header">
+                <img src="reheboth.png" style = "height:10px" class="rounded me-2" alt="...">
+                <strong class="me-auto text-success">Success Message</strong>
+                <small>1 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-center fw-bold">
+                ${response.data.statusText}
+            </div>
+        `
+        toast.show();
+    } else if(response.data.errorCode) {
+        toastLiveExample.innerHTML = `
+            <div class="toast-header">
+                <img src="reheboth.png" style = "height:10px" class="rounded me-2" alt="...">
+                <strong class="me-auto text-danger">Error!!!</strong>
+                <small>1 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-center fw-bold">
+                ${response.data.statusText}
+            </div>
+        `
+        toast.show();
     }
 })
 

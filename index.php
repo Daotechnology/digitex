@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-    <?php include_once('template/head.php'); ?>
+<?php include_once('template/head.php'); ?>
 
 <body>
     

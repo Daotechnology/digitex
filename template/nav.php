@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+ob_start();
+?>
 
 <nav class="navbar navbar-expand-md navbar-light d-flex flex-row justify-content-between">
         <div class="container-xxl">
